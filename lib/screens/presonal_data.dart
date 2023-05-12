@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:untitled11/screens/registe_cources.dart';
 import 'package:untitled11/screens/welcome.dart';
 
 import 'courses_payment.dart';
+import 'go_to_payment.dart';
 import 'login.dart';
 
 class PersonalData extends StatefulWidget {
@@ -84,7 +86,7 @@ class _PersonalDataState extends State<PersonalData> {
                       ),
                     ),
                     child: Text(
-                      "+91",
+                      "+20",
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -124,7 +126,7 @@ class _PersonalDataState extends State<PersonalData> {
             SizedBox(height: 3),
             TextFormField(
               decoration: InputDecoration(
-                  hintText: "رقم الموبيل",
+                  hintText: "المؤهل ",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
                       borderSide: BorderSide(color: Colors.blue)),
@@ -136,7 +138,7 @@ class _PersonalDataState extends State<PersonalData> {
 
               onPressed: () {
                 Navigator.pushReplacementNamed(
-                    context, CourcesAndPayment.routeName);
+                    context, RegisterCourcse.routeName);
               },
               child: const Text(
                 'الكورسات والدفع ',
@@ -146,7 +148,7 @@ class _PersonalDataState extends State<PersonalData> {
             ElevatedButton(
                 onPressed: (){
                   Navigator.pushReplacementNamed(
-                      context, WelcomeScreen.routeName);
+                      context, RegisterCourcse.routeName);
                 },
                 child: Icon(Icons.exit_to_app)),
           ],

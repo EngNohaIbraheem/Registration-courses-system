@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:untitled11/screens/welcome.dart';
 
@@ -13,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -41,57 +44,83 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            // Image.asset(
-            //   "assets/images/main_bg.png",
-            //   fit: BoxFit.fill,
-            //   width: double.infinity,
-            // ),
-            Center(
-              child: Text(
-                """اداره التدريب\n كليه الدراسات العليا للبحوث الاحصائيه
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // Image.asset(
+              //   "assets/images/main_bg.png",
+              //   fit: BoxFit.fill,
+              //   width: double.infinity,
+              // ),
+              Center(
+                child: Text(
+                  """اداره التدريب\n كليه الدراسات العليا للبحوث الاحصائيه
 """,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                  hintText: "الرقم الجامعى",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blue)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blue))),
-            ),
-            SizedBox(height: 20),
-            TextFormField(
-              decoration: InputDecoration(
-                  hintText: "كلمه المرور",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blue)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blue))),
-            ),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                    hintText: " الاميل الجامعى",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.blue)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.blue))),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                    hintText: "كلمه المرور",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.blue)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: Colors.blue))),
+              ),
 
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(
-                      context, WelcomeScreen.routeName);
-                },
-                child: Text('Login')),
-            TextButton(
-                onPressed: () {
+              ElevatedButton(
+                  onPressed: () {
+                    LoginButton();
+                    Navigator.pushReplacementNamed(
+                        context, WelcomeScreen.routeName);
+                  },
+                  child: Text('Login')),
+              TextButton(
+                  onPressed: () {
 
-                },
-                child: Text("Don't Have An Account ?"))
-          ],
+                  },
+                  child: Text("Don't Have An Account ?"))
+            ],
+          ),
         ),
       ),
     );
   }
+  void LoginButton() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        final credential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
 }

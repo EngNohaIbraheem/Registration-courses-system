@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:untitled11/screens/presonal_data.dart';
 
 import 'courses_payment.dart';
+import 'mangement_traning.dart';
 
 class RegisteData extends StatefulWidget {
   static const String routeName = "RegisteData";
@@ -110,9 +111,9 @@ class _RegisteDataState extends State<RegisteData> {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                     primary: Colors.grey,
-                    padding: EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 120, vertical: 20),
                     textStyle: TextStyle(
-                        fontSize: 17,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold)),
               ),
               ElevatedButton(
@@ -133,17 +134,17 @@ class _RegisteDataState extends State<RegisteData> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(
-                      context, CourcesAndPayment.routeName);
+                      context, MangemenTraning.routeName);
                 },
                 child: const Text(
-                  'تسجيل كورسات  ',
+                  'تسجيل الخروج  ',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
               InkWell(
                   onTap: (){
                     Navigator.pushReplacementNamed(
-                        context, PersonalData.routeName);
+                        context, MangemenTraning.routeName);
                   },
                   child: Icon(Icons.exit_to_app)),
             ],
